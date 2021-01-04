@@ -16,7 +16,7 @@ namespace EFCoreCRUDAppTest1
             // Create the database if it doesn't exist
             context.Database.EnsureCreated();
 
-            // crea un anagarifica
+            // crea una anagrafica
             var giorgio = new anagrafica() { Nome = "Giorgio", Cognome = "Saad" };
             context.Add(giorgio);
 
