@@ -17,12 +17,12 @@ namespace EFCoreCRUDAppTest1
             context.Database.EnsureCreated();
 
             // crea una anagrafica
-            var giorgio = new anagrafica() { Nome = "Giorgio", Cognome = "Saad" };
+            var giorgio = new Anagrafica() { Nome = "Giorgio", Cognome = "Saad" };
             context.Add(giorgio);
 
             // crea una lista di gruppi
-            var amministratore = new gruppo() { Nome = "admin" };
-            var utente = new gruppo() { Nome = "user" };
+            var amministratore = new Gruppo() { Nome = "admin" };
+            var utente = new Gruppo() { Nome = "user" };
 
             // aggiungo i gruppi
             context.AddRange(amministratore, utente);
@@ -33,7 +33,7 @@ namespace EFCoreCRUDAppTest1
             // salva
             context.SaveChanges();
 
-            var query = context.anagrafiche.Include(i => i.Gruppi);
+            var query = context.Anagrafiche.Include(i => i.Gruppi);
 
             // mostra la query prossima all'esecuizione
             Console.WriteLine(query.ToQueryString());
@@ -54,31 +54,31 @@ namespace EFCoreCRUDAppTest1
             context.SaveChanges();
         }
     }
-    public class anagrafica : @base
+    public class Anagrafica : @base
     {
         public String Nome { get; set; }
         public String Cognome { get; set; }
-        public List<gruppo> Gruppi { get; } = new List<gruppo>();
+        public List<Gruppo> Gruppi { get; } = new List<Gruppo>();
     }
 
-    public class gruppo : @base
+    public class Gruppo : @base
     {
-        public String Nome { get; set; }
-        public List<anagrafica> Utenti { get; } = new List<anagrafica>();
+        public string Nome { get; set; }
+        public List<Anagrafica> Utenti { get; } = new List<Anagrafica>();
     }
     public class @base
     {
         public int id { get; set; }
-        public String UtenteCreazione { get; set; }
-        public DateTime DtCrezione { get; set; }
-        public String UtenteModifica { get; set; }
+        public string UtenteCreazione { get; set; }
+        public DateTime DtCreazione { get; set; }
+        public string UtenteModifica { get; set; }
         public DateTime? DtModifica { get; set; }
     }
 
     public class testDbContext : DbContext
     {
-        public DbSet<anagrafica> anagrafiche { get; set; }
-        public DbSet<gruppo> gruppi { get; set; }
+        public DbSet<Anagrafica> Anagrafiche { get; set; }
+        public DbSet<Gruppo> Gruppi { get; set; }
         public override int SaveChanges()
         {
             var utenteCorrente = "giorgio160586";
@@ -89,7 +89,7 @@ namespace EFCoreCRUDAppTest1
             {
                 if (item.State == EntityState.Added)
                 {
-                    ((@base)item.Entity).DtCrezione = DateTime.Now;
+                    ((@base)item.Entity).DtCreazione = DateTime.Now;
                     ((@base)item.Entity).UtenteCreazione = utenteCorrente;
                 }
                 else
